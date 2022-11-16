@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33103.184
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RANSAC server", "RANSAC\RANSAC.vcxproj", "{58B67BDB-01C4-4E44-939B-E2268A8D2B39}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RANSAC client", "RANSAC client\RANSAC client.vcxproj", "{0B3B5B43-815D-4B9C-B9AA-6899C846A55E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{58B67BDB-01C4-4E44-939B-E2268A8D2B39}.Debug|x64.ActiveCfg = Debug|x64
+		{58B67BDB-01C4-4E44-939B-E2268A8D2B39}.Debug|x64.Build.0 = Debug|x64
+		{58B67BDB-01C4-4E44-939B-E2268A8D2B39}.Release|x64.ActiveCfg = Release|x64
+		{58B67BDB-01C4-4E44-939B-E2268A8D2B39}.Release|x64.Build.0 = Release|x64
+		{0B3B5B43-815D-4B9C-B9AA-6899C846A55E}.Debug|x64.ActiveCfg = Debug|x64
+		{0B3B5B43-815D-4B9C-B9AA-6899C846A55E}.Debug|x64.Build.0 = Debug|x64
+		{0B3B5B43-815D-4B9C-B9AA-6899C846A55E}.Release|x64.ActiveCfg = Release|x64
+		{0B3B5B43-815D-4B9C-B9AA-6899C846A55E}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {638AFBF8-000A-497A-854C-20C0DCE35E13}
+	EndGlobalSection
+EndGlobal
