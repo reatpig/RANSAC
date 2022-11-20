@@ -335,7 +335,6 @@ void Calculation::doWork(int k, QCPCurveDataContainer const * data,double thresh
     }
     double cofK = (bestFitPointB.y() - bestFitPointA.y()) / (bestFitPointB.x() - bestFitPointA.x());
     double cofB = bestFitPointB.y() - cofK * bestFitPointB.x();
-  
     emit workDone(nInliersGlobalMax, cofK, cofB);
 }
 
@@ -343,7 +342,7 @@ MyUDP::MyUDP(QObject* parent) :
     QObject(parent)
 {
     socket = new QUdpSocket(this);
-   socket->bind(QHostAddress::LocalHost);
+    socket->bind(QHostAddress::LocalHost);
     connect(socket, SIGNAL(readyRead()), this, SLOT(readyRead()));
 }
 #
