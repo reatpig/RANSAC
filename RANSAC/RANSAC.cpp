@@ -98,19 +98,19 @@ RANSAC::RANSAC(QWidget* parent)
 }
 void RANSAC::timerUpdate()
 {
- //Timer's work
+    //Timer's work
     timerTime++;
-    QTime time = QTime::fromMSecsSinceStartOfDay(timerTime); 
+    QTime time = QTime::fromMSecsSinceStartOfDay(timerTime);
     ui.timer->setText(time.toString("mm:ss:zzz"));
 }
 RANSAC::~RANSAC()
 {
-    for (int i = 0; i < MAX_THREAD; ++i)
-        allThread[i]->deleteLater();
-    for (int i = 0; i < MAX_THREAD; ++i)
-        delete allThread[i];
-    for (int i = 0; i < MAX_THREAD; ++i)
-        delete allCalculation[i];
+
+    for (int i = 0; i < MAX_THREAD; ++i) {
+        allThread[i]->quit();
+        allThread[i]->wait();
+    }
+
 }
 //Calculate threshold with MAD
  long double calcThreshold(QCPCurveDataContainer* data) {
@@ -246,7 +246,7 @@ void RANSAC::startRANSAC()
             allThread[i]->start();
     }
     //Number of iterations
-    unsigned int k = 200;
+    unsigned int k = 300;
     timer->start(1);  
     if (multithreading)
         emit operate(ceil((float)k / MAX_THREAD), allPoints->data().data(), threshold);
