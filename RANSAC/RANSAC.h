@@ -12,7 +12,7 @@ class QCPColorCurve : public QCPCurve
 {
 public:
     QCPItemStraightLine* infLine;
-    int* p_threshold;
+    double* p_threshold;
     QCPColorCurve(QCPAxis* keyAxis, QCPAxis* valueAxis);
     virtual ~QCPColorCurve();
     void setData(const QVector<double>& keys, const QVector<double>& values);
@@ -72,7 +72,7 @@ private:
     QTimer* timer;
     QVector<QThread*> allThread;
     QVector<Calculation*> allCalculation;
-    int threshold;
+    double threshold;
     const int MAX_THREAD =( QThreadPool::globalInstance()->maxThreadCount()>1? QThreadPool::globalInstance()->maxThreadCount():2)-1;
     bool working=false;
     QCPColorCurve* allPoints;

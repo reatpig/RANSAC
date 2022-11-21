@@ -113,7 +113,7 @@ RANSAC::~RANSAC()
 
 }
 //Calculate threshold with MAD
- long double calcThreshold(QCPCurveDataContainer* data) {
+  double calcThreshold(QCPCurveDataContainer* data) {
     //Median
     std::vector< long double> sortedData;
     sortedData.reserve(data->size());
@@ -128,7 +128,7 @@ RANSAC::~RANSAC()
         number =abs(number- mid);
     }
     sort(sortedData.begin(), sortedData.end());
-     return sqrt(sortedData[sortedData.size() / 2]) / 16;;
+     return sqrtf(sortedData[sortedData.size() / 2]) / 12.;
 }
  void RANSAC::loadFromFile()
  {
@@ -163,8 +163,8 @@ RANSAC::~RANSAC()
          QString line(file.readLine());
          auto splitedLine = QStringRef(&line, 1, line.size() - 3).split(',');
          bool ok;
-         int x = splitedLine[0].toDouble(&ok);
-         int y = splitedLine[1].toDouble(&ok);
+         double x = splitedLine[0].toDouble(&ok);
+         double y = splitedLine[1].toDouble(&ok);
          if (!ok) {
              QMessageBox::information(this, tr("Data corrupted"),
                  file.errorString());
@@ -230,8 +230,10 @@ void RANSAC::onMousePress(QMouseEvent* event)
             }
             if (!thereIs) //Add point
                 allPoints->addData(x, y);
+            ui.graph->replot();
+            threshold = calcThreshold(allPoints->data().data());
         }
-        ui.graph->replot();
+      
     }
 }
 
