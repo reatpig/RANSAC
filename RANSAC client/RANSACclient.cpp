@@ -27,7 +27,7 @@ RANSACclient::RANSACclient(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    udp = new MyUDP;
+    udp = new MyUDP(this);
     ui.text->setText("");
     ui.Graph->setInteraction(QCP::iRangeDrag, true);
     ui.Graph->setInteraction(QCP::iRangeZoom, true);

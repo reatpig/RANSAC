@@ -39,13 +39,13 @@ void QCPColorCurve::drawScatterPlot(QCPPainter* painter, const QVector<QPointF>&
                 style.drawShape(painter, points.at(i));
             }
     }
-    else        for (int i = 0; i < nPoints; ++i)
+    else for (int i = 0; i < nPoints; ++i)
         if (!qIsNaN(points.at(i).x()) && !qIsNaN(points.at(i).y())) {
-             double x, y;
+            double x, y;
             pixelsToCoords(points.at(i), x, y);
             QPointF point(x, y);
-            if(isWithinThreshold(infLine->point1->coords(), infLine->point2->coords(), point, *p_threshold))
-                painter->setPen(Qt::blue);        
+            if (isWithinThreshold(infLine->point1->coords(), infLine->point2->coords(), point, *p_threshold))
+                painter->setPen(Qt::blue);
             else    painter->setPen(Qt::red);
             style.drawShape(painter, points.at(i));
         }
@@ -92,9 +92,8 @@ RANSAC::RANSAC(QWidget* parent)
         connect(allCalculation[i], SIGNAL(workDone(unsigned int, double, double)), allThread[i], SLOT(quit()));
         connect(allCalculation[i], SIGNAL(workDone(unsigned int, double, double)),
             this, SLOT(handleResults(unsigned int, double, double)));
-        connect(this, SIGNAL(operate(int, QCPCurveDataContainer const*, double)),
-            allCalculation[i], SLOT(doWork(int, QCPCurveDataContainer const*, double)));
     }
+
 }
 void RANSAC::timerUpdate()
 {
@@ -245,6 +244,9 @@ void RANSAC::startRANSAC()
         return;
     working = true;
     for (int i = 0; i < (multithreading ? MAX_THREAD : 1); ++i) {
+            
+            connect(this, SIGNAL(operate(int, QCPCurveDataContainer const*, double)),
+                allCalculation[i], SLOT(doWork(int, QCPCurveDataContainer const*, double)));
             allThread[i]->start();
     }
     //Number of iterations
@@ -255,10 +257,10 @@ void RANSAC::startRANSAC()
     else  
         emit operate(k, allPoints->data().data(), threshold);
 }
-unsigned int count = 0;
+
 void RANSAC::handleResults(unsigned int score, double k, double b)
 {
-    static unsigned int bestScore = 0;
+    static unsigned int bestScore = 0, count=0;
     static double bestK = 0, bestB = 0;
 
     if (score > bestScore) {
@@ -284,7 +286,9 @@ void RANSAC::handleResults(unsigned int score, double k, double b)
            currPoint = { data->at(p)->key , data->at(p)->value };
            inliers.insert({ currPoint,isWithinThreshold(maybeInlierA, maybeInlierB, currPoint, threshold )});
         }
-
+        for (int i = 0; i < MAX_THREAD; ++i)
+            disconnect(this, SIGNAL(operate(int, QCPCurveDataContainer const*, double)),
+                allCalculation[i], SLOT(doWork(int, QCPCurveDataContainer const*, double)));
         allPoints->setInliers(inliers);
         ui.graph->replot();
         udp->sendStraight(bestK, bestB);
@@ -300,6 +304,7 @@ void RANSAC::handleResults(unsigned int score, double k, double b)
 void RANSAC::toggleThreads()
 {
     if (!working) {
+      
         multithreading = !multithreading;
     }
     else {
